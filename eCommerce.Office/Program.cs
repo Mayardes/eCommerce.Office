@@ -1,4 +1,5 @@
 ﻿using eCommerce.Office;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -12,7 +13,18 @@ using var host = Host.CreateDefaultBuilder(args)
 
 var db = new eCommerceOfficeContext();
 
-foreach(var setor in db.Setores)
+#region Many-To-Many > 2x One-To-Many
+
+var resultado = db.Setores?.Include(x => x.ColaboradoresSetores).ThenInclude(x => x.Colaborador);
+foreach(var setor in resultado)
 {
-    Console.WriteLine($"Id setor é {setor.Id}, com seu nome {setor.Nome}");
+    Console.WriteLine($"Setor: {setor.Nome}");
+
+    foreach(var colabSetor in setor.ColaboradoresSetores)
+    {
+        Console.WriteLine($"SetorId: {colabSetor.SetorId} - colaboradorId : {colabSetor.ColaboradorId}");
+        Console.WriteLine($"SetorId: {colabSetor.SetorId} - Nome : {colabSetor.Colaborador.Nome}");
+    }
 }
+//Sendo a única opção em um relacionamento N:N usando o EF Core com versão < 5.0
+#endregion
