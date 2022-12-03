@@ -5,11 +5,7 @@ namespace eCommerce.Office
 {
     public class eCommerceOfficeContext : DbContext
     {
-        public eCommerceOfficeContext(DbContextOptions<eCommerceOfficeContext> connection): base(connection){}
-        public eCommerceOfficeContext()
-        {
-            Database.EnsureCreated();
-        }
+        public eCommerceOfficeContext(DbContextOptions<eCommerceOfficeContext> options): base(options){}
 
         public DbSet<Colaborador> Colaboradores { get; set; }
         public DbSet<ColaboradorSetor> ColaboradoresSetores { get; set;}
@@ -18,7 +14,7 @@ namespace eCommerce.Office
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-M3HIHDH\SQLEXPRESS; Database=eComerceOfficeDB; Integrated Security=true;");
+            optionsBuilder.UseSqlServer(@"Server=DESKTOP-M3HIHDH\SQLEXPRESS; Database=eComerceOfficeDB; Integrated Security=true; TrustServerCertificate=true");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
