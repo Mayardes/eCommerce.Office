@@ -8,3 +8,11 @@ using var host = Host.CreateDefaultBuilder(args)
         services.AddDbContext<eCommerceOfficeContext>();
     })
     .Build();
+
+
+var db = new eCommerceOfficeContext();
+
+foreach(var setor in db.Setores)
+{
+    Console.WriteLine($"Id setor é {setor.Id}, com seu nome {setor.Nome}");
+}

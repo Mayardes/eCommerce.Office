@@ -5,12 +5,13 @@ namespace eCommerce.Office
 {
     public class eCommerceOfficeContext : DbContext
     {
-        public eCommerceOfficeContext(DbContextOptions<eCommerceOfficeContext> options): base(options){}
+        //public eCommerceOfficeContext(DbContextOptions<eCommerceOfficeContext> options): base(options){}
 
         public DbSet<Colaborador> Colaboradores { get; set; }
         public DbSet<ColaboradorSetor> ColaboradoresSetores { get; set;}
         public DbSet<Turma> Turmas { get; set;}
         public DbSet<Veiculo> Veiculos { get; set;}
+        public DbSet<Setor> Setores { get; set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
