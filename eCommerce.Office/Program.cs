@@ -45,3 +45,21 @@ foreach(var colab in resultadoTurma)
 }
 #endregion
 
+#region Many-To-Many for EF Core > 5.0 para uso de uma tabela temporária quando necessitamos de atributo dessa relação
+
+Console.WriteLine("____________Many-To-Many for EF Core > 5.0 ________________");
+
+var colaboradorVeiculos = db.ColaboradorVeiculo
+    .Include(x => x.Colaborador)
+    .ThenInclude(x => x.ColaboradoresVeiculos)
+    .ThenInclude(x => x.Veiculo);
+
+foreach(var colab in colaboradorVeiculos)
+{
+    Console.WriteLine($"{colab.Colaborador.Nome}");
+    foreach(var veiculo in colab.Colaborador.ColaboradoresVeiculos)
+    {
+        Console.WriteLine($"Nome: {veiculo.Veiculo.Nome}, Placa: {veiculo.Veiculo.Placa}");
+    }
+}
+#endregion
