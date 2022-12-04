@@ -20,7 +20,7 @@ namespace eCommerce.Office
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region ColaboradorSetor
+            #region Mapping: ColaboradorSetor
             /**
              * Muitos para Muitos usando 2 relacionamentos de Um para Muitos
              */
@@ -43,6 +43,16 @@ namespace eCommerce.Office
 
             #endregion
 
+            //deixar explicito o mapeamento usando o EF Core > 5.0
+            #region Mapping: 
+            modelBuilder.Entity<Colaborador>().HasMany(x => x.Turmas).WithMany(x => x.Colaboradores);
+            #endregion
+            modelBuilder.Entity<Turma>().HasData(
+                new Turma() { Id = 1, Nome = "Turma A1"},
+                new Turma() { Id = 2, Nome = "Turma A2"},
+                new Turma() { Id = 3, Nome = "Turma A3"},
+                new Turma() { Id = 4, Nome = "Turma A4"},
+                new Turma() { Id = 5, Nome = "Turma A5"});
             #region Seeds
             modelBuilder.Entity<Colaborador>().HasData(
             new Colaborador(){ Id = 1, Nome = "José da Silva"}, 

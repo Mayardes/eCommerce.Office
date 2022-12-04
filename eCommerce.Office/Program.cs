@@ -13,7 +13,7 @@ using var host = Host.CreateDefaultBuilder(args)
 
 var db = new eCommerceOfficeContext();
 
-#region Many-To-Many > 2x One-To-Many
+#region Many-To-Many > 2x One-To-Many for EF Core <= 3.1
 
 var resultado = db.Setores?.Include(x => x.ColaboradoresSetores).ThenInclude(x => x.Colaborador);
 foreach(var setor in resultado)
@@ -28,3 +28,20 @@ foreach(var setor in resultado)
 }
 //Sendo a única opção em um relacionamento N:N usando o EF Core com versão < 5.0
 #endregion
+
+#region Many-To-Many for EF Core > 3.1
+
+Console.WriteLine("____________Many-To-Many for EF Core > 5.0 ________________");
+var resultadoTurma = db.Colaboradores!.Include(x => x.Turmas);
+
+foreach(var colab in resultadoTurma)
+{
+    Console.WriteLine($"{colab.Nome}");
+
+    foreach(var turma in colab.Turmas)
+    {
+        Console.WriteLine($"-{turma.Nome}");
+    }
+}
+#endregion
+
